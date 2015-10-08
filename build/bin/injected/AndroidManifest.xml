@@ -29,6 +29,10 @@
 
 		</activity>
 
+		<activity
+			android:name=".AppPreferences"
+			android:label="@string/settings"/>
+
 	</application>
 
 </manifest>

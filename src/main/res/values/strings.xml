@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">teleIPX800</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="title">Welcome to TeleIpx800!</string>
+	<string name="servername_sum">Provide a valid servername, either numeric or symbolic</string>
+	<string name="servername">Servername</string>
+	<string name="serverport_sum">Provide a numeric portnumber</string>
+	<string name="serverport">Servername</string>
+	<string name="settings">Settings</string>
 </resources>

@@ -1,11 +1,68 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/maincontainer"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:gravity="center">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+	<TextView
+		android:text="@string/title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/titleView"/>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="@string/servername"
+			android:id="@+id/servernameLabel"
+			android:paddingRight="10dp"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="name"
+			android:id="@+id/servernameValue"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text=":"/>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="9123"
+			android:id="@+id/portValue"/>
+
+	</LinearLayout>
+
+	<GridLayout
+		columnCount="1"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		rowCount="1"
+		android:id="@+id/shortcutgrid"
+		android:columnCount="4">
+
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Button"/>
+
+		<ImageButton
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+
+	</GridLayout>
 
 </LinearLayout>
+
