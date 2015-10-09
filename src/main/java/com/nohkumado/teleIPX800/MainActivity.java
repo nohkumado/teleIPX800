@@ -11,12 +11,15 @@ import android.view.ViewGroup.*;
 import android.widget.*;
 
 import android.view.View.OnClickListener;
+import com.nohkumado.ipx800controll.*;
 
 public class MainActivity extends Activity implements OnClickListener
 {
 
 
 	public final static String TAG ="MA";
+	protected Ipx800Control ipx = new Ipx800Control();
+	
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -68,6 +71,8 @@ public class MainActivity extends Activity implements OnClickListener
 		if (field != null) field.setText(sp.getString("servername", "NA"));
 		field = (TextView) parent.findViewById(R.id.portValue);
 		if (field != null) field.setText(sp.getString("serverport", "NA"));
+		
+		ipx.setServer(sp.getString("servername", "NA"));
 
 		GridLayout shortcuts = (GridLayout) parent.findViewById(R.id.shortcutgrid);
 		if (shortcuts != null)
