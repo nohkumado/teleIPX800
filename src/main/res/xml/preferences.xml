@@ -3,9 +3,109 @@
 	<EditTextPreference android:title="@string/servername"
 		android:key="servername"
 		android:summary="@string/servername_sum">
-		</EditTextPreference>
-	<EditTextPreference android:title="@string/serverport"
-		android:key="serverport"
-		android:summary="@string/serverport_sum">
 	</EditTextPreference>
+	<com.nohkumado.teleIPX800.IntEditTextPreference android:title="@string/serverport"
+		android:key="serverport"
+		android:summary="@string/serverport_sum"
+		android:numeric="integer"
+		android:maxLength="6">
+	</com.nohkumado.teleIPX800.IntEditTextPreference>
+	<EditTextPreference android:title="@string/relai1_name"
+		android:key="relai1_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai1_pic"
+		android:key="relai1_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai2_name"
+		android:key="relai2_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai2_pic"
+		android:key="relai2_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai3_name"
+		android:key="relai3_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai3_pic"
+		android:key="relai3_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai4_name"
+		android:key="relai4_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai4_pic"
+		android:key="relai4_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai5_name"
+		android:key="relai5_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai5_pic"
+		android:key="relai5_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai6_name"
+		android:key="relai6_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai6_pic"
+		android:key="relai6_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai7_name"
+		android:key="relai7_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai7_pic"
+		android:key="relai7_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai8_name"
+		android:key="relai8_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai8_pic"
+		android:key="relai8_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai9_name"
+		android:key="relai9_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai9_pic"
+		android:key="relai9_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai10_name"
+		android:key="relai10_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai10_pic"
+		android:key="relai10_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai11_name"
+		android:key="relai11_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai11_pic"
+		android:key="relai11_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai12_name"
+		android:key="relai12_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai12_pic"
+		android:key="relai12_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai13_name"
+		android:key="relai13_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai13_pic"
+		android:key="relai13_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai14_name"
+		android:key="relai14_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai14_pic"
+		android:key="relai14_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai15_name"
+		android:key="relai15_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai15_pic"
+		android:key="relai15_pic">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai16_name"
+		android:key="relai16_name">
+	</EditTextPreference>
+	<EditTextPreference android:title="@string/relai16_pic"
+		android:key="relai16_pic">
+	</EditTextPreference>
+
+
 </PreferenceScreen>

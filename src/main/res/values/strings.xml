@@ -8,4 +8,46 @@
 	<string name="serverport_sum">Provide a numeric portnumber</string>
 	<string name="serverport">Servername</string>
 	<string name="settings">Settings</string>
+	<string name="about">About</string>
+	<string name="aboutcnt"><h3>Ipx800 remote control</h3>
+		<h4>version first:</h4>
+		<h5>written by nokumado@gmail.com</h5>
+		<p>This is not a domotic controller, its thought as a remote control, for easy access 
+			to the relais of the IPX800 domotic controller,</p>
+		<p>e.g. you have your entry door wired to your IPX, with this, and a minimum of fuss,
+			you can open the door remotely (hopefully standing in front of it...)</p>
+	</string>
+	<string name="ok">ok</string>
+	<string name="relai1_name">Relai 1</string>
+	<string name="relai1_pic">image 1</string>
+	<string name="relai2_name">Relai 2</string>
+	<string name="relai2_pic">image 2</string>
+	<string name="relai3_name">Relai 3</string>
+	<string name="relai3_pic">image 3</string>
+	<string name="relai4_name">Relai 4</string>
+	<string name="relai4_pic">image 4 </string>
+	<string name="relai5_name">Relai 5</string>
+	<string name="relai5_pic">image 5</string>
+	<string name="relai6_name">Relai 6</string>
+	<string name="relai6_pic">image 6</string>
+	<string name="relai7_name">Relai 7</string>
+	<string name="relai7_pic">image 7</string>
+	<string name="relai8_name">Relai 8</string>
+	<string name="relai8_pic">image 8</string>
+	<string name="relai9_name">Relai 9</string>
+	<string name="relai9_pic">image 9</string>
+	<string name="relai10_name">Relai 10</string>
+	<string name="relai10_pic">image 10</string>
+	<string name="relai11_name">Relai 11</string>
+	<string name="relai11_pic">image 11</string>
+	<string name="relai12_name">Relai 12</string>
+	<string name="relai12_pic">image 12</string>
+	<string name="relai13_name">Relai 13</string>
+	<string name="relai13_pic">image 13</string>
+	<string name="relai14_name">Relai 14</string>
+	<string name="relai14_pic">image 14</string>
+	<string name="relai15_name">Relai 15</string>
+	<string name="relai15_pic">image 15</string>
+	<string name="relai16_name">Relai 16</string>
+	<string name="relai16_pic">image 16</string>
 </resources>

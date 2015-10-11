@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.nohkumado.teleIPX800">
+	package="com.nohkumado.teleIPX800"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<uses-sdk
+		tools:overrideLibrary="com.nohkumado.ipx800control"
 		android:minSdkVersion="1"
 		android:targetSdkVersion="1"/>
+
+	<uses-permission
+		android:name="android.permission.INTERNET"/>
 
 	<application
 		android:allowBackup="true"
