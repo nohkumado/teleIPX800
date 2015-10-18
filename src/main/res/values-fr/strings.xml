@@ -9,14 +9,17 @@
 	<string name="serverport">Nom de port</string>
 	<string name="settings">Reglages</string>
 	<string name="about">Infos</string>
-	<string name="aboutcnt"><![CDATA[<html><h3>"T´el´ecommande pour Ipx800"</h3>
-		<h4>version first:</h4>
-		<h5>ecrite par nokumado@gmail.com</h5>
-		<p>"Ceci n'est pas un contr^oleur de domotique, mais juste une t´el´ecommande pour 
-			les relais d'un Ipx800"</p>
-		<p>"p.ex. si vous avez une g^ache ´electrique ˋa votre porte, contr^ol´ee par un IPX,
-			cette application permet de la d´eclencher, et donc d'ouvrir la porte." </p>
-			</html>
+	<string name="aboutcnt"><![CDATA[<html><h3>"Telecommande pour Ipx800"</h3>
+	    <ul>
+		<li>version: first</li>
+		<li>ecrit par: <a href="mailto:nokumado@gmail.com>nokumado@gmail.com</a></li>
+		<li>logo fait par, <a href="mailto:contact@fanaen.fr">Fanaen</a>!</a>
+		</ul>
+		<p>"Ceci n\'est pas un contr^oleur de domotique, mais juste une telecommande pour 
+			les relais d\'un Ipx800"</p>
+		<p>"p.ex. si vous avez une gache electrique a votre porte, controlee par un IPX,
+			cette application permet de la d\'eclencher, et donc d\'ouvrir la porte." </p>
+		</html>
 			]]>
 	</string>
 	<string name="ok">ok</string>

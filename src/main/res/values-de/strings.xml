@@ -10,8 +10,13 @@
 	<string name="settings">Einstellungen</string>
 	<string name="about">"Über"</string>
 	<string name="aboutcnt"><![CDATA[		<html><h3>Ipx800 Fernsteuerung</h3>
-		<h4>Version first:</h4>
-		<h5>geschrieben von nokumado@gmail.com</h5>
+		
+			<ul>
+			<li><p>Version: first</p></li>
+		<li><p>geschrieben von: <a href="nokumado@gmail.com>nokumado@gmail.com</a></p></li>
+		<li><p>Danke für das Logo, <a href="mailto:contact@fanaen.fr">Fanaen</a>!</p></li>
+        <ul>
+			
 		<p>"Dies ist kein Domotic Kontroler, sondern nur eine Fernsteureung der Relais
 			eines IPX800v3 Kontrolers"
 			</p>

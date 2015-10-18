@@ -10,8 +10,11 @@
 	<string name="settings">Settings</string>
 	<string name="about">About</string>
 	<string name="aboutcnt"><![CDATA[<html><h3>Ipx800 remote control</h3>
-		<h4>version first:</h4>
-		<h5>written by nokumado@gmail.com</h5>
+		<ul>
+		 <li>version: first</li>
+		 <li>written by: <a href="mailto:nokumado@gmail.com>nokumado@gmail.com</a></li>
+		<li>logo designed by, <a href="mailto:contact@fanaen.fr">Fanaen</a>!</a></li>
+		</ul>
 		<p>This is not a domotic controller, its thought as a remote control, for easy access 
 			to the relais of the IPX800 domotic controller,</p>
 		<p>e.g. you have your entry door wired to your IPX, with this, and a minimum of fuss,
