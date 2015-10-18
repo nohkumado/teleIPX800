@@ -21,6 +21,4 @@ allprojects {
 		compile "com.nohkumado:ipx800Control:+"
 	}
 }
-dependencies {
-	compile project(':ipx800control')
-}
+

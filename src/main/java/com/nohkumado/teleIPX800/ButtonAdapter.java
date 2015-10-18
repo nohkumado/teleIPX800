@@ -20,14 +20,7 @@ package com.nohkumado.teleIPX800;
  */
 
 
-import android.content.*;
-import android.graphics.*;
-import android.preference.*;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
-import android.view.ViewGroup.*;
-import java.util.*;
+
 
 /**
 ButtonAdapter
@@ -38,6 +31,12 @@ only those relais with a changed label will be taken into account
 Thanks Mat for the starting help
  @link http://www.stealthcopter.com/blog/2010/09/android-creating-a-custom-adapter-for-gridview-buttonadapter/
 */
+import android.content.*;
+import android.preference.*;
+import android.view.*;
+import android.widget.*;
+import java.util.*;
+
 public class ButtonAdapter extends BaseAdapter
 {
 	protected Context mContext;
@@ -133,7 +132,7 @@ public class ButtonAdapter extends BaseAdapter
 		{  
 			// if it's not recycled, initialize some attributes
 			btn = new Button(mContext);
-			btn.setLayoutParams(new LayoutParams(
+			btn.setLayoutParams(new ViewGroup.LayoutParams(
 									ViewGroup.LayoutParams.WRAP_CONTENT,
 									ViewGroup.LayoutParams.WRAP_CONTENT));
 

@@ -20,6 +20,7 @@ package com.nohkumado.teleIPX800;
  */
 
 
+import android.*;
 import android.content.*;
 import android.os.*;
 import android.preference.*;
@@ -52,6 +53,7 @@ handles the special case of the serverport entry which is an int....
 		for(String key : prefs.getAll().keySet())
 		{
 			Preference pref = findPreference(key);
+			if(pref == null) continue;
 			if(key.equals("serverport"))
 				pref.setSummary(""+prefs.getInt(key,0));
 			else pref.setSummary(prefs.getString(key,key));

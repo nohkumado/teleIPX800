@@ -5,12 +5,12 @@ package com.nohkumado.teleIPX800;
 
  This file is part of Foobar.
 
- Foobar is free software: you can redistribute it and/or modify
+ This is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- Foobar is distributed in the hope that it will be useful,
+ This is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
@@ -19,6 +19,7 @@ package com.nohkumado.teleIPX800;
  along with @filename.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import android.*;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -30,9 +31,9 @@ import android.view.ViewGroup.*;
 import android.widget.*;
 import com.nohkumado.ipx800control.*;
 
+
 public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-
 	public final static String TAG ="MA";
 	protected Ipx800Control ipx = new Ipx800Control();
 	protected ButtonClickListener clickHandler = new ButtonClickListener(this);

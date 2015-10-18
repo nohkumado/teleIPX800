@@ -4,9 +4,12 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.text.*;
+import android.util.*;
 
 public class AboutDialogFragment extends DialogFragment
 {
+
+  public static final  String TAG = "AboutD";
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) 
 		{
@@ -19,7 +22,11 @@ public class AboutDialogFragment extends DialogFragment
 			//builder.setView(msg);
 			builder.setCancelable(false);
 			
-			builder.setMessage(Html.fromHtml(getResources().getString(R.string.aboutcnt)))
+		  //builder.setMessage(Html.fromHtml(getResources().getString(R.string.aboutcnt)))
+		  String aboutMsg = getResources().getString(R.string.aboutcnt);
+		  //Log.d(TAG,"extracted about :"+aboutMsg);
+		  //Spannable span = Spannable.Factory.getInstance().newSpannable(aboutMsg);
+		  builder.setMessage(Html.fromHtml(aboutMsg))
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 					}

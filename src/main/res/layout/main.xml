@@ -51,6 +51,11 @@
 		android:id="@+id/shortcutgrid"
 		android:numColumns="auto_fit">
 	</GridView>
-
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text=""
+		android:id="@+id/msgField"/>
+	
 </LinearLayout>
 
