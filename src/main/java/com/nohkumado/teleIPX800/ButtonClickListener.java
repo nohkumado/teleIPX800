@@ -20,11 +20,11 @@ package com.nohkumado.teleIPX800;
  */
 
 
+import android.content.*;
 import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-import java.util.*;
 import com.nohkumado.ipx800control.*;
 
 /**
@@ -56,17 +56,31 @@ CTOR
 		{
 			Button button = (Button) view;
 			Log.d(TAG, "hit the button " + button.getHint()+ "id = "+button.getId());
-			int port2trigger = Integer.parseInt(""+button.getHint());
-			Log.d(TAG, "would trigger ipx out "+port2trigger);
 			try
 			{
-				ipx.set(port2trigger,true);
-				ipx.set(port2trigger,false);
+				int port2trigger = Integer.parseInt(""+button.getHint());
+				Log.d(TAG, "would trigger ipx out "+port2trigger);
+				try
+				{
+					ipx.set(port2trigger,true);
+					ipx.set(port2trigger,false);
+				}
+				catch(Exception e)
+				{
+					Toast.makeText(context, "error:"+e, Toast.LENGTH_LONG).show();
+				}	
 			}
-			catch(Exception e)
+			catch(NumberFormatException e)
 			{
-				Toast.makeText(context, "error:"+e, Toast.LENGTH_LONG).show();
+				//ok, we hit a special button....
+				if(button.getHint().equals("fill_me"))
+				{
+					context.callSettings();
+				}
+				else
+					System.err.println("unknown button code: "+button.getHint());
 			}
+			
 		}
 	}
 }

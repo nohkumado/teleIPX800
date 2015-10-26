@@ -34,184 +34,187 @@ public class IpxStatus
   protected Pattern selPat = Pattern.compile("anselect(\\d+)");
   protected Pattern couPat = Pattern.compile("count(\\d+)");
 
-  
+
 
   public IpxStatus(Ipx800Control i)
   {
-	ipx = i;
-	//refresh();
+		ipx = i;
+		//refresh();
   }
 
   public void refresh(MainActivity context)
   {
-	if (ipx != null)
-	{
-	  SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-	  if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
-	  else sp.edit().putString("servername", ipx.getHost()).apply();
-	  if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
-	  else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
-	  
-	  String result = ipx.status();
-	  //Log.d(TAG,"ipx returned "+result);
-	  if (result.length() > 0) connected = true;
-	  InputStream stream = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
-	  try
-	  {
-		parse(stream);
-	  }
-	  catch (Exception e)
-	  { Log.d(TAG, "something went wrong parsing " + result);}
-	}
+		if (ipx != null)
+		{
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+			if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
+			else sp.edit().putString("servername", ipx.getHost()).apply();
+			if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
+			else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
+
+			String result = ipx.status();
+			//Log.d(TAG,"ipx returned "+result);
+			if (result.length() > 0)
+			{
+				connected = true;
+				InputStream stream = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
+				try
+				{
+					parse(stream);
+				}
+				catch (Exception e)
+				{ Log.d(TAG, "something went wrong parsing " + result);}
+			}
+		}
   }
 
   public boolean isConnected()
   {
-	return connected;
+		return connected;
   }
 
   public void parse(InputStream in) throws XmlPullParserException, IOException 
   {
-	try 
-	{
-	  XmlPullParser parser = Xml.newPullParser();
-	  parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-	  parser.setInput(in, null);
-	  parser.nextTag();
-	  readStatus(parser);
-	} 
-	finally 
-	{
-	  in.close();
-	}
+		try 
+		{
+			XmlPullParser parser = Xml.newPullParser();
+			parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+			parser.setInput(in, null);
+			parser.nextTag();
+			readStatus(parser);
+		} 
+		finally 
+		{
+			in.close();
+		}
   }
 
   private void readStatus(XmlPullParser parser) throws XmlPullParserException, IOException 
   {
-	Log.d(TAG,"starting parsing "+parser.getName());
+		Log.d(TAG, "starting parsing " + parser.getName());
     parser.require(XmlPullParser.START_TAG, ns, "response");
     while (parser.next() != XmlPullParser.END_TAG) 
-	{
-	  if (parser.getEventType() != XmlPullParser.START_TAG)
-	  {
-		continue;
-	  }
-	  String name = parser.getName();
-	  //Log.d(TAG,"found tag to parse  "+name);
-	  // Starts by looking for the entry tag
-	  if (name.startsWith("led"))
-	  {
-		Matcher match = ledPat.matcher(name);
-		
-		if(match.find())
 		{
-		  int index = Integer.parseInt(match.group(1));
-		  String content = readText(parser);
-		  if (content.equals("1")) leds[index] = true;
-		  else leds[index] = false;
-		}
-		else Log.e(TAG,"couldn't find a number in "+name);
-	  }
-	  else if (name.startsWith("btn"))
-	  {
-		Matcher match = butPat.matcher(name);
-		if(match.find())
-		{
-		int index = Integer.parseInt(match.group(1));
-		String content = readText(parser);
+			if (parser.getEventType() != XmlPullParser.START_TAG)
+			{
+				continue;
+			}
+			String name = parser.getName();
+			//Log.d(TAG,"found tag to parse  "+name);
+			// Starts by looking for the entry tag
+			if (name.startsWith("led"))
+			{
+				Matcher match = ledPat.matcher(name);
 
-		if (content.equals("UP")) buttons[index] = true;
-		else buttons[index] = false;
-		}
-	  }
-	  else if (name.matches("day")) //   <day>16/10/2015 </day>
-	  {
-		String content = readText(parser);
+				if (match.find())
+				{
+					int index = Integer.parseInt(match.group(1));
+					String content = readText(parser);
+					if (content.equals("1")) leds[index] = true;
+					else leds[index] = false;
+				}
+				else Log.e(TAG, "couldn't find a number in " + name);
+			}
+			else if (name.startsWith("btn"))
+			{
+				Matcher match = butPat.matcher(name);
+				if (match.find())
+				{
+					int index = Integer.parseInt(match.group(1));
+					String content = readText(parser);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		ipxDate = new Date();
-		try
-		{
-		  ipxDate = dateFormat.parse(content);
-		}
-		catch (ParseException e)
-		{
-		  // TODO Auto-generated catch block
-		  e.printStackTrace();
-		}  
-	  }
-	  else if (name.startsWith("time")) //   <time0>19:30:59</time0> 
-	  {
-		String content = readText(parser);
+					if (content.equals("UP")) buttons[index] = true;
+					else buttons[index] = false;
+				}
+			}
+			else if (name.matches("day")) //   <day>16/10/2015 </day>
+			{
+				String content = readText(parser);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
-		Date tmpStamp = new Date();
-		try
-		{
-		  tmpStamp = dateFormat.parse(content);
-		  ipxDate.setHours(tmpStamp.getHours());
-		  ipxDate.setMinutes(tmpStamp.getMinutes());
-		  ipxDate.setSeconds(tmpStamp.getSeconds());
-		}
-		catch (ParseException e)
-		{
-		  // TODO Auto-generated catch block
-		  e.printStackTrace();
-		}  
-	  }//<analog0>0</analog0>
-	  else if (name.startsWith("analog"))
-	  {
-		Matcher match = anaPat.matcher(name);
-		if(match.find())
-		{
-		int index = Integer.parseInt(match.group(1));
-		String content = readText(parser);
-		int value = Integer.parseInt(content);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				ipxDate = new Date();
+				try
+				{
+					ipxDate = dateFormat.parse(content);
+				}
+				catch (ParseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+			}
+			else if (name.startsWith("time")) //   <time0>19:30:59</time0> 
+			{
+				String content = readText(parser);
 
-		analog[index] = value;
-		//Log.d(TAG, "set analog " + index + " to " + value);
-		}
-	  }
-	  else if (name.startsWith("anselect")) //<anselect0>0</anselect0>
-	  {
-		Matcher match = selPat.matcher(name);
-		if(match.find())
-		{
-		  
-		int index = Integer.parseInt(match.group(1));
-		String content = readText(parser);
-		//Log.d(TAG, "extracted anselect " + index + " to " + content);
-		/*int value = Integer.parseInt(content);
-		 TODO find out what this is x16
-		 analog[index] = value;
-		 Log.d(TAG, "set analog " + counter + " to " + value);
-		 */
-		}
-	  }
-	  else if (name.startsWith("count")) //<count0>23</count0>
-	  {
-		Matcher match = couPat.matcher(name);
-		if(match.find())
-		{
-		int index = Integer.parseInt(match.group(1));
-		String content = readText(parser);
-		int value = Integer.parseInt(content);
+				SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+				Date tmpStamp = new Date();
+				try
+				{
+					tmpStamp = dateFormat.parse(content);
+					ipxDate.setHours(tmpStamp.getHours());
+					ipxDate.setMinutes(tmpStamp.getMinutes());
+					ipxDate.setSeconds(tmpStamp.getSeconds());
+				}
+				catch (ParseException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+			}//<analog0>0</analog0>
+			else if (name.startsWith("analog"))
+			{
+				Matcher match = anaPat.matcher(name);
+				if (match.find())
+				{
+					int index = Integer.parseInt(match.group(1));
+					String content = readText(parser);
+					int value = Integer.parseInt(content);
 
-		counter[index] = value;
-		}
-	  }
-	  else if (name.matches("tinfo")) // <tinfo>---</tinfo>
-	  {
-		tinfo = readText(parser);
-	  }
-	  else if (name.matches("version")) //   <version>3.05.59d</version>
-	  {
-		version = readText(parser);
-	  }
-	  else
-	  {
-		skip(parser);
-	  }
+					analog[index] = value;
+					//Log.d(TAG, "set analog " + index + " to " + value);
+				}
+			}
+			else if (name.startsWith("anselect")) //<anselect0>0</anselect0>
+			{
+				Matcher match = selPat.matcher(name);
+				if (match.find())
+				{
+
+					int index = Integer.parseInt(match.group(1));
+					String content = readText(parser);
+					//Log.d(TAG, "extracted anselect " + index + " to " + content);
+					/*int value = Integer.parseInt(content);
+					 TODO find out what this is x16
+					 analog[index] = value;
+					 Log.d(TAG, "set analog " + counter + " to " + value);
+					 */
+				}
+			}
+			else if (name.startsWith("count")) //<count0>23</count0>
+			{
+				Matcher match = couPat.matcher(name);
+				if (match.find())
+				{
+					int index = Integer.parseInt(match.group(1));
+					String content = readText(parser);
+					int value = Integer.parseInt(content);
+
+					counter[index] = value;
+				}
+			}
+			else if (name.matches("tinfo")) // <tinfo>---</tinfo>
+			{
+				tinfo = readText(parser);
+			}
+			else if (name.matches("version")) //   <version>3.05.59d</version>
+			{
+				version = readText(parser);
+			}
+			else
+			{
+				skip(parser);
+			}
     }  
   }
 
@@ -277,30 +280,30 @@ public class IpxStatus
   {
     String result = "";
     if (parser.next() == XmlPullParser.TEXT)
-	{
-	  result = parser.getText();
-	  parser.nextTag();
+		{
+			result = parser.getText();
+			parser.nextTag();
     }
     return result;
   }
   private void skip(XmlPullParser parser) throws XmlPullParserException, IOException
   {
     if (parser.getEventType() != XmlPullParser.START_TAG)
-	{
-	  throw new IllegalStateException();
+		{
+			throw new IllegalStateException();
     }
     int depth = 1;
     while (depth != 0)
-	{
-	  switch (parser.next())
-	  {
+		{
+			switch (parser.next())
+			{
         case XmlPullParser.END_TAG:
-		  depth--;
-		  break;
+					depth--;
+					break;
         case XmlPullParser.START_TAG:
-		  depth++;
-		  break;
-	  }
+					depth++;
+					break;
+			}
     }
   }
 }

@@ -40,6 +40,7 @@ public class Relai
 		name = n;
 		label = l;
 	}
+
 	/**
 	 return the label for this relai
 
@@ -49,9 +50,34 @@ public class Relai
 	{return label;}
 	/**
 	 return the position for this relai
-
+    
+	 the fill_me button, e.g. has as position -10, making it known to the processing code, that its 
+	 not a regular relai, and should be treated differently....
+	 in this case the hint is not set to the position of the relai, but the name of it...
+	 
 	 @return position
 	 */
 	public int pos()
 	{return pos;}
+	/**
+	name
+	setter for the name field
+	
+	@param name the name this relai should have
+	*/
+	public void name(String name)
+	{
+		this.name = name;
+	}
+/**
+name
+getter for the name field
+
+@returns the name of this relai
+*/
+	public String name()
+	{
+		return name;
+	}
+	
 }

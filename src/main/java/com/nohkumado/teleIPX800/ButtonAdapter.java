@@ -23,14 +23,14 @@ package com.nohkumado.teleIPX800;
 
 
 /**
-ButtonAdapter
+ ButtonAdapter
 
-a class to store the relai-infos extracted from the shared preferences,
-only those relais with a changed label will be taken into account
+ a class to store the relai-infos extracted from the shared preferences,
+ only those relais with a changed label will be taken into account
 
-Thanks Mat for the starting help
+ Thanks Mat for the starting help
  @link http://www.stealthcopter.com/blog/2010/09/android-creating-a-custom-adapter-for-gridview-buttonadapter/
-*/
+ */
 import android.content.*;
 import android.preference.*;
 import android.view.*;
@@ -40,28 +40,28 @@ import java.util.*;
 public class ButtonAdapter extends BaseAdapter
 {
 	protected Context mContext;
-    protected ButtonClickListener clickHandler;
+	protected ButtonClickListener clickHandler;
 	protected ArrayList<Relai> content = new ArrayList<Relai>();
 
 	public static final String TAG = "ButAd";
 
 	/**
-	CTOR
-	*/
+	 CTOR
+	 */
 	public ButtonAdapter(Context c)
 	{
 		mContext = c;
 	}
 
-    /**
-	fillData
-	
-	extract from the preferences wich relais have changed labels,
-	create a relai object and store the whole in a list
-	
-	@argument clickHandler the object that will listen and react to the clicks
-	@see Relai
-	*/
+	/**
+	 fillData
+
+	 extract from the preferences wich relais have changed labels,
+	 create a relai object and store the whole in a list
+
+	 @argument clickHandler the object that will listen and react to the clicks
+	 @see Relai
+	 */
 	public void fillData(ButtonClickListener clickHandler)
 	{
 		this.clickHandler = clickHandler;
@@ -79,35 +79,40 @@ public class ButtonAdapter extends BaseAdapter
 				content.add(relai);
 			}
 		}
+		if (content.size() <= 0)
+		{
+			Relai relai = new Relai(-10, "fill_me", sp.getString("fill_me", "fill me"));
+			content.add(relai);
+		}
 	}
 
 	/**
-	getCount
-	
-	Total number of Relai's contained within the adapter
-	*/
+	 getCount
+
+	 Total number of Relai's contained within the adapter
+	 */
 	public int getCount()
 	{
 		return content.size();
 	}
 
 	/**
-	getItem
-	returns the relai at the given position
-	*/
+	 getItem
+	 returns the relai at the given position
+	 */
 	public Object getItem(int position)
 	{
 		return content.get(position);
 	}
 
 	/**
-	
-	getItemId
-	
-	Require for structure, not really used in my code. Can
-	be used to get the id of an item in the adapter for 
-	manual control.
-	*/
+
+	 getItemId
+
+	 Require for structure, not really used in my code. Can
+	 be used to get the id of an item in the adapter for 
+	 manual control.
+	 */
 	public long getItemId(int position) 
 	{
 		Relai btn = content.get(position);
@@ -116,14 +121,17 @@ public class ButtonAdapter extends BaseAdapter
 	}
 
 	/**
-	getView
-	
-	extracts relai-info at the given position,
-	if the button exists reuses it, otherwise creates one,
-	initializes it with the relai-data, and returns it
-	*/
+	 getView
+
+	 extracts relai-info at the given position,
+	 if the button exists reuses it, otherwise creates one,
+	 initializes it with the relai-data, and returns it
+	 
+	 if the position of the relai is not in the relai-range, a special purpose button
+	 is supposed and the hint set to its name instead of the position....
+	 */
 	public View getView(int position, 
-						View convertView, ViewGroup parent) 
+											View convertView, ViewGroup parent) 
 	{
 		Relai relai = content.get(position);
 		//Log.d(TAG, "creating button" + position);
@@ -133,8 +141,8 @@ public class ButtonAdapter extends BaseAdapter
 			// if it's not recycled, initialize some attributes
 			btn = new Button(mContext);
 			btn.setLayoutParams(new ViewGroup.LayoutParams(
-									ViewGroup.LayoutParams.WRAP_CONTENT,
-									ViewGroup.LayoutParams.WRAP_CONTENT));
+														ViewGroup.LayoutParams.WRAP_CONTENT,
+														ViewGroup.LayoutParams.WRAP_CONTENT));
 
 			btn.setOnClickListener(clickHandler);
 
@@ -145,12 +153,14 @@ public class ButtonAdapter extends BaseAdapter
 		}
 		//exus
 		btn.setText(relai.label());
-		btn .setHint("" + position);
+		if (relai.pos() >= 0 && relai.pos() < 33) btn.setHint("" + position);
+		else btn.setHint(relai.name());
+
 		// filenames is an array of strings
 		//btn.setTextColor(Color.WHITE);
 		//btn.setBackgroundResource(R.drawable.button);
 		//btn.setId(relai.pos());
-		
+
 		return btn;
 	}
 	/**

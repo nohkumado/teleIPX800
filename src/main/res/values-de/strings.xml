@@ -3,18 +3,19 @@
 
     <string name="app_name">teleIPX800</string>
     <string name="title">TeleIpx800!</string>
-	<string name="servername_sum">"Gültiger Server Name, numerisch oder symbolisch"</string>
-	<string name="servername">Server Name</string>
-	<string name="serverport_sum">Port Nummer, numerisch</string>
-	<string name="serverport">Server-Port</string>
-	<string name="settings">Einstellungen</string>
-	<string name="about">"Über"</string>
-	<string name="aboutcnt"><![CDATA[		<html><h3>Ipx800 Fernsteuerung</h3>
+		<string name="servername_sum">"Gültiger Server Name, numerisch oder symbolisch"</string>
+		<string name="servername">Server Name</string>
+		<string name="serverport_sum">Port Nummer, numerisch</string>
+		<string name="serverport">Server-Port</string>
+		<string name="settings">Einstellungen</string>
+		<string name="about">"Über"</string>
+		<string name="aboutcnt"><![CDATA[		<html><h3>Ipx800 Fernsteuerung</h3>
 		
 			<ul>
 			<li><p>Version: first</p></li>
 		<li><p>geschrieben von: <a href="nokumado@gmail.com>nokumado@gmail.com</a></p></li>
 		<li><p>Danke für das Logo, <a href="mailto:contact@fanaen.fr">Fanaen</a>!</p></li>
+    <li><p>Danke für das Promo-Bild, Florian W.!</p></li>
         <ul>
 			
 		<p>"Dies ist kein Domotic Kontroler, sondern nur eine Fernsteureung der Relais
@@ -24,39 +25,40 @@
 			dieser Applikation leicht geöffnet werden (und hoffentlich stehen Sie dabei vor der Tür)"</p>
 		</html>	
 
-		]]>
-	</string>
-	<string name="ok">ok</string>
-	<string name="relai1_name">Relai 1</string>
-	<string name="relai1_pic">image 1</string>
-	<string name="relai2_name">Relai 2</string>
-	<string name="relai2_pic">image 2</string>
-	<string name="relai3_name">Relai 3</string>
-	<string name="relai3_pic">image 3</string>
-	<string name="relai4_name">Relai 4</string>
-	<string name="relai4_pic">image 4 </string>
-	<string name="relai5_name">Relai 5</string>
-	<string name="relai5_pic">image 5</string>
-	<string name="relai6_name">Relai 6</string>
-	<string name="relai6_pic">image 6</string>
-	<string name="relai7_name">Relai 7</string>
-	<string name="relai7_pic">image 7</string>
-	<string name="relai8_name">Relai 8</string>
-	<string name="relai8_pic">image 8</string>
-	<string name="relai9_name">Relai 9</string>
-	<string name="relai9_pic">image 9</string>
-	<string name="relai10_name">Relai 10</string>
-	<string name="relai10_pic">image 10</string>
-	<string name="relai11_name">Relai 11</string>
-	<string name="relai11_pic">image 11</string>
-	<string name="relai12_name">Relai 12</string>
-	<string name="relai12_pic">image 12</string>
-	<string name="relai13_name">Relai 13</string>
-	<string name="relai13_pic">image 13</string>
-	<string name="relai14_name">Relai 14</string>
-	<string name="relai14_pic">image 14</string>
-	<string name="relai15_name">Relai 15</string>
-	<string name="relai15_pic">image 15</string>
-	<string name="relai16_name">Relai 16</string>
-	<string name="relai16_pic">image 16</string>
+				]]>
+		</string>
+		<string name="ok">ok</string>
+		<string name="fill_me">"Ausfüllen"</string>
+		<string name="relai1_name">Relai 1</string>
+		<string name="relai1_pic">image 1</string>
+		<string name="relai2_name">Relai 2</string>
+		<string name="relai2_pic">image 2</string>
+		<string name="relai3_name">Relai 3</string>
+		<string name="relai3_pic">image 3</string>
+		<string name="relai4_name">Relai 4</string>
+		<string name="relai4_pic">image 4 </string>
+		<string name="relai5_name">Relai 5</string>
+		<string name="relai5_pic">image 5</string>
+		<string name="relai6_name">Relai 6</string>
+		<string name="relai6_pic">image 6</string>
+		<string name="relai7_name">Relai 7</string>
+		<string name="relai7_pic">image 7</string>
+		<string name="relai8_name">Relai 8</string>
+		<string name="relai8_pic">image 8</string>
+		<string name="relai9_name">Relai 9</string>
+		<string name="relai9_pic">image 9</string>
+		<string name="relai10_name">Relai 10</string>
+		<string name="relai10_pic">image 10</string>
+		<string name="relai11_name">Relai 11</string>
+		<string name="relai11_pic">image 11</string>
+		<string name="relai12_name">Relai 12</string>
+		<string name="relai12_pic">image 12</string>
+		<string name="relai13_name">Relai 13</string>
+		<string name="relai13_pic">image 13</string>
+		<string name="relai14_name">Relai 14</string>
+		<string name="relai14_pic">image 14</string>
+		<string name="relai15_name">Relai 15</string>
+		<string name="relai15_pic">image 15</string>
+		<string name="relai16_name">Relai 16</string>
+		<string name="relai16_pic">image 16</string>
 </resources>
