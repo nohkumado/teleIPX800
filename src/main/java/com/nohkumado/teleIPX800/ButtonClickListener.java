@@ -73,12 +73,9 @@ CTOR
 			catch(NumberFormatException e)
 			{
 				//ok, we hit a special button....
-				if(button.getHint().equals("fill_me"))
-				{
-					context.callSettings();
-				}
-				else
-					System.err.println("unknown button code: "+button.getHint());
+				if(button.getId() == R.id.servernameValue)	context.callSettings();
+				else if(button.getHint().equals("fill_me"))	context.callSettings();
+				else System.err.println("unknown button code: "+button.getHint());
 			}
 			
 		}

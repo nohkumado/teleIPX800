@@ -63,7 +63,7 @@ public class IpxStatus
 					parse(stream);
 				}
 				catch (Exception e)
-				{ Log.d(TAG, "something went wrong parsing " + result);}
+				{ Log.e(TAG, "something went wrong parsing " + result);}
 			}
 		}
   }

@@ -67,6 +67,7 @@ public class ButtonAdapter extends BaseAdapter
 		this.clickHandler = clickHandler;
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
 
+		content.clear();
 		for (int i=1; i < 33; i++)
 		{
 			//String actPic = "relai" + i + "_pic";

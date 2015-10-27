@@ -21,6 +21,7 @@ package com.nohkumado.teleIPX800;
 
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.os.*;
 import android.preference.*;
@@ -38,6 +39,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   protected IpxStatus status ;
   protected ButtonClickListener clickHandler = new ButtonClickListener(this);
   protected ButtonAdapter buttonArray;
+	protected Button serverBut;
+	protected boolean bigScreen = false;
+
+	private double textSize;
 
   public MainActivity()
   {
@@ -61,17 +66,35 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   protected void onCreate(Bundle savedInstanceState)
   {
 		super.onCreate(savedInstanceState);
-		Log.d(TAG, "calling refresh");
+		//Log.d(TAG, "calling refresh");
 		status.refresh(this);
-		Log.d(TAG, "ipx    status = " + status.isConnected());
+		//Log.d(TAG, "ipx    status = " + status.isConnected());
+		/*if(isTablet()) {
+		 setTheme(android.R.style.Theme_Light);
+		 }
+		 else {
+		 setTheme(android.R.style.Theme_DeviceDefault);
+		 } 
+		 */
 		setContentView(R.layout.main);
-
+		if (findViewById(R.id.statusLayout) != null)
+		{
+			bigScreen = true;
+			Log.d(TAG, "big screen!!");
+		}
+		else
+			Log.d(TAG, "small screen...");
+		Configuration config = getResources().getConfiguration();
+		if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) Log.d(TAG, "small layout...");
+		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_NORMAL) Log.d(TAG, "normal layout...");
+		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE) Log.d(TAG, "large layout...");
+		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE) Log.d(TAG, "xlarge layout...");
+		
 		//Log.d(TAG, "stored servername = " + sp.getString("servername", "non"));	  
 		//Log.d(TAG, "ipx    servername = " + ipx.getHost());
 
 
 		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
-		buttonArray.clear();
 		//Log.d(TAG, "filling grid");
 		buttonArray.fillData(clickHandler);
 		//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
@@ -124,17 +147,20 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		 Log.e(TAG,"no view found....");
 		 return v;
 		 }*/
-		TextView field = (TextView) parent.findViewById(R.id.servernameValue);
-		if (field != null) 
+		serverBut = (Button) parent.findViewById(R.id.servernameValue);
+		if (serverBut != null) 
 		{
-			field.setText(sp.getString("servername", ipx.getHost()));
+			serverBut.setText(sp.getString("servername", ipx.getHost()));
 			//WTF?? between the CTOR and onCreate this should exist...
 			//if (status == null) status = new IpxStatus(ipx);
-			Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
-			if (status.isConnected()) field.setTextColor(Color.GREEN);
-			else field.setTextColor(Color.RED);  
+			//Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
+			if (status.isConnected()) serverBut.setTextColor(Color.GREEN);
+			else serverBut.setTextColor(Color.RED);
+			serverBut.setOnClickListener(clickHandler);
+			Log.d(TAG, "test size = " + (int)textSize);
+			//serverBut.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int)textSize);
 		}
-		field = (TextView) parent.findViewById(R.id.portValue);
+		Button field = (Button) parent.findViewById(R.id.portValue);
 		if (field != null) field.setText("" + sp.getInt("serverport", ipx.getPort()));
 
 		ipx.setHost(sp.getString("servername", "NA"));
@@ -151,7 +177,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		 gameBoard.addView(imageButtons[i]);
 		 }
 		 */
-
 
 		//	Log.d(TAG, "no grid found...");
 		//parent.invalidate();
@@ -205,23 +230,49 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   @Override
   public void onSharedPreferenceChanged(SharedPreferences p1, String p2)
   {
+		status.refresh(this);
+		serverBut = (Button) findViewById(R.id.servernameValue);
+
+		if (serverBut != null) 
+		{
+			//Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
+			if (status.isConnected()) serverBut.setTextColor(Color.GREEN);
+			else serverBut.setTextColor(Color.RED);
+		}
+
 		GridView shortcuts = (GridView) findViewById(R.id.shortcutgrid);
 		if (shortcuts != null)shortcuts.invalidate();
 		status.refresh(this);
-		
-		/*
-		TODO have to check if after invalidating the createView is called again or not...
-		TextView field = (TextView) parent.findViewById(R.id.servernameValue);
-		if (field != null) 
-		{
-			field.setText(sp.getString("servername", ipx.getHost()));
-			//WTF?? between the CTOR and onCreate this should exist...
-			//if (status == null) status = new IpxStatus(ipx);
-			Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
-			if (status.isConnected()) field.setTextColor(Color.GREEN);
-			else field.setTextColor(Color.RED);  
-		}
-		*/
+		buttonArray.fillData(clickHandler);
   }
+	/**
+	 isTablet
 
+	 tries to find out if its a tablet or a phone....
+
+	 */
+	public boolean isTablet() 
+	{
+    try
+		{
+			// Compute screen size
+			DisplayMetrics dm = getResources().getDisplayMetrics();
+			float screenWidth  = dm.widthPixels / dm.xdpi;
+			float screenHeight = dm.heightPixels / dm.ydpi;
+			double size = Math.sqrt(Math.pow(screenWidth, 2) +
+															Math.pow(screenHeight, 2));
+			textSize = dm.widthPixels * 0.5 / 100;
+			//Set TextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size), where the unit parameter is  and the size parameter is percent of the total width of your screen. Normally, for me, .5% of total width for font is suitable. You can experiment by trying other total width percentages, such as 0.4% or 0.3%.
+			//This way your
+
+			// Tablet devices should have a screen size greater than 6 inches
+			return size >= 6;
+    }
+		catch (Throwable t)
+		{
+			Log.e(TAG, "Failed to compute screen size", t);
+			return false;
+    }
+
+	} 
 }
