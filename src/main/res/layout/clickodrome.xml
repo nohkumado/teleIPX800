@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+		android:gravity="center"
+		android:layout_weight="1"
+		>
+		<TextView
+				android:text="@string/title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/titleView"/>
+
+		<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:orientation="horizontal">
+
+				<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="@string/servername"
+						android:id="@+id/servernameLabel"
+						android:paddingRight="10dp"/>
+
+				<Button
+						style="?android:attr/buttonStyleSmall"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="name"
+						android:id="@+id/servernameValue"/>
+
+				<TextView
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text=":"/>
+
+				<Button
+						style="?android:attr/buttonStyleSmall"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content"
+						android:text="9123"
+						android:id="@+id/portValue"/>
+
+		</LinearLayout>
+
+		<GridView
+				columnCount="1"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				rowCount="1"
+				android:id="@+id/shortcutgrid"
+				android:numColumns="auto_fit">
+
+		</GridView>
+    
+</LinearLayout>

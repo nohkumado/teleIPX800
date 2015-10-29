@@ -1,5 +1,8 @@
 *.class
 *.dex
+*.ap*
+log
+ipx800control
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

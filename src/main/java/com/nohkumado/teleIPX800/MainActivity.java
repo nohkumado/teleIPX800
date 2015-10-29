@@ -30,6 +30,7 @@ import android.view.*;
 import android.view.ViewGroup.*;
 import android.widget.*;
 import com.nohkumado.ipx800control.*;
+import android.view.View.*;
 
 
 public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -50,6 +51,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		status = new IpxStatus(ipx) ;	
   }
 
+	
+
   /**
    getIpx
    returns the ipx object
@@ -67,6 +70,9 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   {
 		super.onCreate(savedInstanceState);
 		//Log.d(TAG, "calling refresh");
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		ipx.setHost(sp.getString("servername", "NA"));
+		
 		status.refresh(this);
 		//Log.d(TAG, "ipx    status = " + status.isConnected());
 		/*if(isTablet()) {
@@ -97,92 +103,30 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
 		//Log.d(TAG, "filling grid");
 		buttonArray.fillData(clickHandler);
+		
 		//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
-		GridView shortcuts = (GridView) findViewById(R.id.shortcutgrid);
-		if (shortcuts == null)
+		Log.d(TAG,"creating clickodrome...");
+		ClickoDrome clickView = new ClickoDrome();
+		Log.d(TAG,"fetching clickcontainer...");
+		LinearLayout clickContainer = (LinearLayout) findViewById(R.id.clickodrome);
+		if(clickContainer != null)
 		{
-			//Log.d(TAG, "no grid found...");
-			LinearLayout mainWindow = (LinearLayout)findViewById(R.id.maincontainer);
-			//Log.d(TAG,"mainwin "+mainWindow);
-
-			shortcuts = new GridView(this);
-			shortcuts.setId(mainWindow.generateViewId());
-			shortcuts.setLayoutParams(new GridView.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-			shortcuts.setBackgroundColor(Color.WHITE);
-			shortcuts.setNumColumns(3);
-			shortcuts.setColumnWidth(GridView.AUTO_FIT);
-			shortcuts.setVerticalSpacing(5);
-			shortcuts.setHorizontalSpacing(5);
-			shortcuts.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-			mainWindow.addView(shortcuts);
-			//else Log.e(TAG,"couldn't find mainWindow???");
+			if (savedInstanceState != null) return;
+			Log.d(TAG,"about to add the fragment clickodrome...");
+			View parent = clickView.getView();
+			Log.d(TAG,"view of clickview = "+clickView.getView());
+      if(parent != null)
+			Log.d(TAG,"parent of clickview = "+clickView.getView().getParent());
+       //((LinearLayout)clickContainer.getParent()).removeView(clickContainer);
+			// Add the fragment to the 'fragment_container' FrameLayout
+			getFragmentManager().beginTransaction()
+				.add(R.id.clickodrome, clickView).commit();
 		}
-		shortcuts.setAdapter(buttonArray);
+		Log.d(TAG,"done create...");
+		
   }
 
-  /**
-   onCreateView
-   finds the different fields, fills in the labels etc. triggers the button-grid-creation
-   */
-  @Override
-  public View onCreateView(View parent, String name, Context context, AttributeSet attrs)
-  {
-		View v =  super.onCreateView(parent, name, context, attrs);
-		//Log.d(TAG, "creating view "+v);
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		//why oh why?? i had this allready in createView???
-		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
-		if (parent == null)
-		{
-			//Log.e(TAG, "no parentview found....");
-			return v;
-		}
-		/*if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
-		 else sp.edit().putString("servername", ipx.getHost()).apply();
-		 if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
-		 else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
-		 */
-		/*if(v == null)
-		 {
-		 Log.e(TAG,"no view found....");
-		 return v;
-		 }*/
-		serverBut = (Button) parent.findViewById(R.id.servernameValue);
-		if (serverBut != null) 
-		{
-			serverBut.setText(sp.getString("servername", ipx.getHost()));
-			//WTF?? between the CTOR and onCreate this should exist...
-			//if (status == null) status = new IpxStatus(ipx);
-			//Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
-			if (status.isConnected()) serverBut.setTextColor(Color.GREEN);
-			else serverBut.setTextColor(Color.RED);
-			serverBut.setOnClickListener(clickHandler);
-			Log.d(TAG, "test size = " + (int)textSize);
-			//serverBut.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int)textSize);
-		}
-		Button field = (Button) parent.findViewById(R.id.portValue);
-		if (field != null) field.setText("" + sp.getInt("serverport", ipx.getPort()));
-
-		ipx.setHost(sp.getString("servername", "NA"));
-
-		/*
-		 or(int i = 0 ; i < NUMBER_OF_IMAGE_BUTTONS; i++){
-		 imageButtons[i] = new ImageButton(this);
-		 imageButtons[i].setImageResource(R.drawable.bola_verde);
-		 imageButtons[i].setLayoutParams(lp);
-		 imageButtons[i].setOnClickListener(mGreenBallOnClickListener);
-		 imageButtons[i].setBackgroundColor(Color.TRANSPARENT); 
-		 imageButtons[i].setTag(i);
-		 imageButtons[i].setId(i);
-		 gameBoard.addView(imageButtons[i]);
-		 }
-		 */
-
-		//	Log.d(TAG, "no grid found...");
-		//parent.invalidate();
-		//Log.d(TAG, "done creating view ");
-		return v;
-  }
+ 
   /**
    onCreateOptionsMenu
    creates the menu atm only the settings
@@ -242,7 +186,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 
 		GridView shortcuts = (GridView) findViewById(R.id.shortcutgrid);
 		if (shortcuts != null)shortcuts.invalidate();
-		status.refresh(this);
+		//status.refresh(this);
 		buttonArray.fillData(clickHandler);
   }
 	/**
@@ -275,4 +219,24 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     }
 
 	} 
+	/**
+	 gridData
+	 
+	 @returns the adapter with the griddata...
+	 */
+	public ButtonAdapter gridData()
+	{
+		return buttonArray;
+	}
+	public View.OnClickListener getClickHandler()
+	{
+		return clickHandler;
+	}
+
+	public boolean isConnected()
+	{
+		if(status == null) return false;
+		return status.isConnected();
+	}
+	
 }
