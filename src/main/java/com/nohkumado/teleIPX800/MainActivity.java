@@ -42,25 +42,20 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   protected ButtonAdapter buttonArray;
 	protected Button serverBut;
 	protected boolean bigScreen = false;
+	protected ClickoDrome clickView;
 
-	private double textSize;
+ 	private double textSize;
 
-  public MainActivity()
+  /**
+	 CTOR
+	 creates and initializes the status obkect
+	 */
+	public MainActivity()
   {
 		super();
 		status = new IpxStatus(ipx) ;	
   }
 
-	
-
-  /**
-   getIpx
-   returns the ipx object
-   */
-  public Ipx800Control getIpx()
-  {
-		return ipx;
-  }
   /**
    onCreate
    creates if needed a new ButtonAdapter
@@ -72,7 +67,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		//Log.d(TAG, "calling refresh");
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		ipx.setHost(sp.getString("servername", "NA"));
-		
+
 		status.refresh(this);
 		//Log.d(TAG, "ipx    status = " + status.isConnected());
 		/*if(isTablet()) {
@@ -86,16 +81,16 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		if (findViewById(R.id.statusLayout) != null)
 		{
 			bigScreen = true;
-			Log.d(TAG, "big screen!!");
+			//Log.d(TAG, "big screen!!");
 		}
-		else
-			Log.d(TAG, "small screen...");
+		//else
+		//Log.d(TAG, "small screen...");
 		Configuration config = getResources().getConfiguration();
-		if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) Log.d(TAG, "small layout...");
-		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_NORMAL) Log.d(TAG, "normal layout...");
-		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE) Log.d(TAG, "large layout...");
-		else if(config.screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE) Log.d(TAG, "xlarge layout...");
-		
+		if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) Log.d(TAG, "small layout...");
+		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_NORMAL) Log.d(TAG, "normal layout...");
+		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE) Log.d(TAG, "large layout...");
+		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE) Log.d(TAG, "xlarge layout...");
+
 		//Log.d(TAG, "stored servername = " + sp.getString("servername", "non"));	  
 		//Log.d(TAG, "ipx    servername = " + ipx.getHost());
 
@@ -103,30 +98,31 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
 		//Log.d(TAG, "filling grid");
 		buttonArray.fillData(clickHandler);
-		
-		//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
-		Log.d(TAG,"creating clickodrome...");
-		ClickoDrome clickView = new ClickoDrome();
-		Log.d(TAG,"fetching clickcontainer...");
+
 		LinearLayout clickContainer = (LinearLayout) findViewById(R.id.clickodrome);
-		if(clickContainer != null)
+		if (clickContainer != null)
 		{
 			if (savedInstanceState != null) return;
-			Log.d(TAG,"about to add the fragment clickodrome...");
-			View parent = clickView.getView();
-			Log.d(TAG,"view of clickview = "+clickView.getView());
-      if(parent != null)
-			Log.d(TAG,"parent of clickview = "+clickView.getView().getParent());
-       //((LinearLayout)clickContainer.getParent()).removeView(clickContainer);
 			// Add the fragment to the 'fragment_container' FrameLayout
+			//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
+			Log.d(TAG, "creating clickodrome...");
+			clickView = new ClickoDrome();
+			Log.d(TAG, "fetching clickcontainer...");
 			getFragmentManager().beginTransaction()
 				.add(R.id.clickodrome, clickView).commit();
 		}
-		Log.d(TAG,"done create...");
-		
+		LinearLayout statusContainer  = (LinearLayout) findViewById(R.id.statusLayout);
+		if (statusContainer != null)
+		{
+			if (savedInstanceState != null) return;
+			StatusFragment statView = new StatusFragment();		
+			
+			getFragmentManager().beginTransaction()
+				.add(R.id.statusLayout, statView).commit();
+		}
+		Log.d(TAG, "done create...");
   }
 
- 
   /**
    onCreateOptionsMenu
    creates the menu atm only the settings
@@ -221,13 +217,22 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	} 
 	/**
 	 gridData
-	 
+
 	 @returns the adapter with the griddata...
 	 */
 	public ButtonAdapter gridData()
 	{
 		return buttonArray;
 	}
+	/**
+   getIpx
+   returns the ipx object
+   */
+  public Ipx800Control getIpx()
+  {
+		return ipx;
+  }
+
 	public View.OnClickListener getClickHandler()
 	{
 		return clickHandler;
@@ -235,8 +240,17 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 
 	public boolean isConnected()
 	{
-		if(status == null) return false;
+		if (status == null) return false;
 		return status.isConnected();
 	}
-	
+	public IpxStatus getStatus()
+	{
+		return status;
+	}
+	public void statusUpdated()
+	{
+		if(clickView != null) clickView.invalidate();
+		// TODO: Implement this method
+	}
+
 }

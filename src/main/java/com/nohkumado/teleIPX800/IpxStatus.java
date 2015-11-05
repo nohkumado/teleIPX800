@@ -1,4 +1,5 @@
 package com.nohkumado.teleIPX800;
+import android.app.*;
 import android.content.*;
 import android.preference.*;
 import android.util.*;
@@ -20,6 +21,8 @@ public class IpxStatus
   protected Date ipxDate;
   protected int[] analog = new int[16];
   protected int[] counter = new int[8];
+	protected ProgressDialog progressDialog;
+	protected MainActivity context;
 
 
   public final static String TAG = "IPXSTATUS";
@@ -40,10 +43,26 @@ public class IpxStatus
   {
 		ipx = i;
 		//refresh();
+
   }
 
-  public void refresh(MainActivity context)
+	public void connected(boolean p0)
+	{
+		connected = p0;
+	}
+
+  public void refresh(MainActivity c)
   {
+		context = c;
+		String result = "";
+		if (progressDialog == null)
+		{
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setMessage("@strings/updateipx");
+			progressDialog.setIndeterminate(true);
+			progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		}
+
 		if (ipx != null)
 		{
 			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -52,20 +71,34 @@ public class IpxStatus
 			if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
 			else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
 
-			String result = ipx.status();
-			//Log.d(TAG,"ipx returned "+result);
-			if (result.length() > 0)
-			{
-				connected = true;
-				InputStream stream = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
-				try
-				{
-					parse(stream);
-				}
-				catch (Exception e)
-				{ Log.e(TAG, "something went wrong parsing " + result);}
-			}
+
+			UpdateIpxStatusTask updateIt = new UpdateIpxStatusTask(progressDialog, this);
+			//Log.d(TAG, "starting thread with " + hexgrid);
+			updateIt.execute(new Ipx800Control[] {ipx});
 		}
+		/*
+		 if (ipx != null)
+		 {
+		 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+		 if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
+		 else sp.edit().putString("servername", ipx.getHost()).apply();
+		 if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
+		 else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
+
+		 String result = ipx.status();
+		 //Log.d(TAG,"ipx returned "+result);
+		 if (result.length() > 0)
+		 {
+		 connected = true;
+		 InputStream stream = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
+		 try
+		 {
+		 parse(stream);
+		 }
+		 catch (Exception e)
+		 { Log.e(TAG, "something went wrong parsing " + result);}
+		 }
+		 }*/
   }
 
   public boolean isConnected()
@@ -87,6 +120,7 @@ public class IpxStatus
 		{
 			in.close();
 		}
+		if(context != null) context.statusUpdated();
   }
 
   private void readStatus(XmlPullParser parser) throws XmlPullParserException, IOException 

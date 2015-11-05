@@ -15,31 +15,31 @@ public class ClickoDrome extends Fragment
 {
 	protected MainActivity context;
 	protected Button serverBut;
+	protected View myView;
 	public final static String TAG ="ClDr";
-  
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		context = (MainActivity) getContext();
-		Log.d(TAG,"done Clickodrome create...");
-		
+		Log.d(TAG, "done Clickodrome create...");
+
 	}
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.d(TAG,"entering Clickodrome createView... container: "+container);
-		Log.d(TAG,"previous state: "+savedInstanceState);
-		View myView = inflater.inflate(R.layout.clickodrome, container,false);
-		if(myView == null) return myView;
+		Log.d(TAG, "entering Clickodrome createView... container: " + container);
+		Log.d(TAG, "previous state: " + savedInstanceState);
+		myView = inflater.inflate(R.layout.clickodrome, container, false);
+		if (myView == null) return myView;
 		context = (MainActivity) getContext();
-		
+
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 		Ipx800Control ipx = context.getIpx();
-		
+
 		GridView shortcuts = (GridView) myView.findViewById(R.id.shortcutgrid);
 		if (shortcuts == null)
 		{
@@ -60,8 +60,8 @@ public class ClickoDrome extends Fragment
 			//else Log.e(TAG,"couldn't find mainWindow???");
 		}
 		shortcuts.setAdapter(context.gridData());
-		
-		
+
+
 		serverBut = (Button) myView.findViewById(R.id.servernameValue);
 		if (serverBut != null) 
 		{
@@ -78,9 +78,13 @@ public class ClickoDrome extends Fragment
 		Button field = (Button) myView.findViewById(R.id.portValue);
 		if (field != null) field.setText("" + sp.getInt("serverport", ipx.getPort()));
 
-		Log.d(TAG,"done Clickodrome createView...");
-		
+		Log.d(TAG, "done Clickodrome createView...");
+
 		return myView;
 	}
 
+	public void invalidate()
+	{
+		if (myView != null) myView.invalidate();	
+	}
 }
