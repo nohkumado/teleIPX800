@@ -17,12 +17,12 @@ public class UpdateIpxStatusTask extends AsyncTask<Ipx800Control, Integer, Strin
 {
 	public static final String TAG = "update-thread";
 	ProgressDialog hourglass;
-	IpxStatus context;
+	IpxStatus ipxStatus;
 
 	public UpdateIpxStatusTask(ProgressDialog d, IpxStatus c) 
 	{
 		hourglass = d;
-		context =  c;
+		ipxStatus =  c;
 	}
 
 	@Override
@@ -38,14 +38,14 @@ public class UpdateIpxStatusTask extends AsyncTask<Ipx800Control, Integer, Strin
 			//Log.d(TAG,"ipx returned "+result);
 			if (result.length() > 0)
 			{
-				context.connected(true);
+				ipxStatus.connected(true);
 				InputStream stream = new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8));
 				try
 				{
-					context.parse(stream);
+					ipxStatus.parse(stream);
 				}
 				catch (Exception e)
-				{ Log.e(TAG, "something went wrong parsing " + result);}
+				{ Log.e(TAG, "something went wrong parsing " + result+"\nException "+e);}
 			}
 		}
 		return result;

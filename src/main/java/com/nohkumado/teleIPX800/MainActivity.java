@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	protected Button serverBut;
 	protected boolean bigScreen = false;
 	protected ClickoDrome clickView;
+	protected StatusFragment statView;
 
  	private double textSize;
 
@@ -66,6 +67,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		super.onCreate(savedInstanceState);
 		//Log.d(TAG, "calling refresh");
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		sp.registerOnSharedPreferenceChangeListener(this);
+		
 		ipx.setHost(sp.getString("servername", "NA"));
 
 		status.refresh(this);
@@ -115,8 +118,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		if (statusContainer != null)
 		{
 			if (savedInstanceState != null) return;
-			StatusFragment statView = new StatusFragment();		
-			
+			statView = new StatusFragment();		
+
 			getFragmentManager().beginTransaction()
 				.add(R.id.statusLayout, statView).commit();
 		}
@@ -170,6 +173,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   @Override
   public void onSharedPreferenceChanged(SharedPreferences p1, String p2)
   {
+		Log.d(TAG,"in main shared preference change handling");
 		status.refresh(this);
 		serverBut = (Button) findViewById(R.id.servernameValue);
 
@@ -249,8 +253,15 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	}
 	public void statusUpdated()
 	{
-		if(clickView != null) clickView.invalidate();
-		// TODO: Implement this method
+		Log.d(TAG, "about to invalidate click view...");
+		runOnUiThread(new Runnable() 
+			{
+				@Override
+				public void run() 
+				{
+					if (clickView != null) clickView.invalidate();
+					if (statView != null) statView.update();
+				}
+			});
 	}
-
 }

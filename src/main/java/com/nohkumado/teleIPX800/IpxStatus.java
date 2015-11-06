@@ -45,6 +45,11 @@ public class IpxStatus
 		//refresh();
 
   }
+	public String getDate()
+	{
+		if(ipxDate != null)return ipxDate.toString();
+		return "nothing available";
+	}
 
 	public void connected(boolean p0)
 	{
@@ -53,6 +58,7 @@ public class IpxStatus
 
   public void refresh(MainActivity c)
   {
+		Log.d(TAG,"exe refresh!");
 		context = c;
 		String result = "";
 		if (progressDialog == null)
@@ -65,12 +71,13 @@ public class IpxStatus
 
 		if (ipx != null)
 		{
+			Log.d(TAG,"found ipx!");
 			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 			if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
 			else sp.edit().putString("servername", ipx.getHost()).apply();
 			if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
 			else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
-
+			Log.d(TAG,"set port to : "+ipx.getHost()+":"+ipx.getPort()+" starting updatetask");
 
 			UpdateIpxStatusTask updateIt = new UpdateIpxStatusTask(progressDialog, this);
 			//Log.d(TAG, "starting thread with " + hexgrid);
@@ -115,17 +122,20 @@ public class IpxStatus
 			parser.setInput(in, null);
 			parser.nextTag();
 			readStatus(parser);
+			Log.d(TAG,"finished parsing");
 		} 
 		finally 
 		{
 			in.close();
 		}
+		//set the data in the status viw
+		Log.d(TAG,"updating views");
 		if(context != null) context.statusUpdated();
   }
 
   private void readStatus(XmlPullParser parser) throws XmlPullParserException, IOException 
   {
-		Log.d(TAG, "starting parsing " + parser.getName());
+		//Log.d(TAG, "starting parsing " + parser.getName());
     parser.require(XmlPullParser.START_TAG, ns, "response");
     while (parser.next() != XmlPullParser.END_TAG) 
 		{
@@ -214,7 +224,6 @@ public class IpxStatus
 				Matcher match = selPat.matcher(name);
 				if (match.find())
 				{
-
 					int index = Integer.parseInt(match.group(1));
 					String content = readText(parser);
 					//Log.d(TAG, "extracted anselect " + index + " to " + content);
@@ -324,6 +333,7 @@ public class IpxStatus
   {
     if (parser.getEventType() != XmlPullParser.START_TAG)
 		{
+			Log.d(TAG,parser.getText()+" not a start tag!! bailing out");
 			throw new IllegalStateException();
     }
     int depth = 1;

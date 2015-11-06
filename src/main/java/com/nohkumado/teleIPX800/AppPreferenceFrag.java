@@ -31,52 +31,61 @@ public class AppPreferenceFrag extends PreferenceFragment implements SharedPrefe
 {
 	public final static String TAG = "PrefFrag";
 	/**
-	onCreate
-	
-	adds the preferences from the ressourcefile
-	*/
+	 onCreate
+
+	 adds the preferences from the ressourcefile
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		prefs.registerOnSharedPreferenceChangeListener(this);
 	}
-/**
-onCreateView
+	/**
+	 onCreateView
 
-handles the special case of the serverport entry which is an int....
-*/
+	 handles the special case of the serverport entry which is an int....
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		for(String key : prefs.getAll().keySet())
+		//prefs.registerOnSharedPreferenceChangeListener(this);
+		for (String key : prefs.getAll().keySet())
 		{
 			Preference pref = findPreference(key);
-			if(pref == null) continue;
-			if(key.equals("serverport"))
-				pref.setSummary(""+prefs.getInt(key,0));
-			else pref.setSummary(prefs.getString(key,key));
+			if (pref == null) continue;
+			if (key.equals("serverport"))
+				pref.setSummary("" + prefs.getInt(key, 0));
+			else pref.setSummary(prefs.getString(key, key));
 		}
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
+
 	/**
-	onSharedPreferenceChanged
-	not needed in my code, but still in case i have one listpreference,
-	its takes the selected entry to create the summary
-	(planned when/if i add background images to the buttons...
-	*/
+	 onSharedPreferenceChanged
+	 not needed in my code, but still in case i have one listpreference,
+	 its takes the selected entry to create the summary
+	 (planned when/if i add background images to the buttons...
+	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPref, String key)
 	{
 		Preference pref = findPreference(key);
-        Log.d(TAG,"preference change for "+key+" "+pref.getTitle());
+		Log.d(TAG, "preference change for " + key + " " + pref.getTitle());
+
 		//pref.getTitle();
 		if (pref instanceof ListPreference) 
 		{
 			ListPreference listPref = (ListPreference) pref;
 			pref.setSummary(listPref.getEntry());
 		}
+		else
+			pref.setSummary(sharedPref.getString(key,key));
+		
+		//MainActivity mainAct = (MainActivity) getContext();
+		//if(mainAct != null) mainAct.onSharedPreferenceChanged(sharedPref,key);
 	}
 }
