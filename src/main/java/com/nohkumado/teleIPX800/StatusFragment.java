@@ -23,7 +23,17 @@ public class StatusFragment extends Fragment
 		Button timeBut = (Button) myView.findViewById(R.id.timeView);
 		if(timeBut != null) timeBut.setText(status.getDate());
 		
-		update();
+		LinearLayout statusView = (LinearLayout) myView.findViewById(R.id.inputStatusView);
+		if(statusView != null)
+		{
+			if(getFragmentManager().findFragmentByTag("inOutFrag") == null)
+				getFragmentManager().beginTransaction()
+					.add(R.id.inputStatusView, 
+					    new LedStatusListFragment(context.getIOstate()),"inOutFrag").commit();
+			
+			
+		}
+		//update();
 		//SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 
 		//GridView shortcuts = (GridView) myView.findViewById(R.id.shortcutgrid);

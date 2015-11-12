@@ -16,13 +16,14 @@ public class IpxStatus
   private static final String ns = null;
   protected Ipx800Control ipx = null;
   protected boolean connected = false;
-  protected boolean leds[] = new boolean[32];
-  protected boolean buttons[] = new boolean[32];
+  //protected boolean leds[] = new boolean[32];
+  //protected boolean buttons[] = new boolean[32];
   protected Date ipxDate;
   protected int[] analog = new int[16];
   protected int[] counter = new int[8];
 	protected ProgressDialog progressDialog;
 	protected MainActivity context;
+	protected LedStatusList inOutData;
 
 
   public final static String TAG = "IPXSTATUS";
@@ -60,6 +61,7 @@ public class IpxStatus
   {
 		Log.d(TAG,"exe refresh!");
 		context = c;
+		inOutData = context.getIOstate();
 		String result = "";
 		if (progressDialog == null)
 		{
@@ -154,8 +156,8 @@ public class IpxStatus
 				{
 					int index = Integer.parseInt(match.group(1));
 					String content = readText(parser);
-					if (content.equals("1")) leds[index] = true;
-					else leds[index] = false;
+					if (content.equals("1")) inOutData.setOut(index,true);
+					else inOutData.setOut(index, false);
 				}
 				else Log.e(TAG, "couldn't find a number in " + name);
 			}
@@ -167,8 +169,8 @@ public class IpxStatus
 					int index = Integer.parseInt(match.group(1));
 					String content = readText(parser);
 
-					if (content.equals("UP")) buttons[index] = true;
-					else buttons[index] = false;
+					if (content.equals("UP")) inOutData.setIn( index, true);
+					else inOutData.setIn(index, false);
 				}
 			}
 			else if (name.matches("day")) //   <day>16/10/2015 </day>
@@ -208,6 +210,7 @@ public class IpxStatus
 			}//<analog0>0</analog0>
 			else if (name.startsWith("analog"))
 			{
+				//TODO num or normalized about 3.3V?
 				Matcher match = anaPat.matcher(name);
 				if (match.find())
 				{

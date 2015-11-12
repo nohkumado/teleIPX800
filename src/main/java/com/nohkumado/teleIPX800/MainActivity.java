@@ -44,6 +44,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	protected boolean bigScreen = false;
 	protected ClickoDrome clickView;
 	protected StatusFragment statView;
+	protected LedStatusList statusData = new LedStatusList();
 
  	private double textSize;
 
@@ -55,6 +56,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   {
 		super();
 		status = new IpxStatus(ipx) ;	
+		for(int i = 0 ; i < 32; i++)
+		{
+			statusData.add("Relai_"+i,false,false);
+		}
   }
 
   /**
@@ -264,4 +269,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 				}
 			});
 	}
+	public LedStatusList getIOstate()
+	{
+		return statusData;
+	}
+
+	
 }

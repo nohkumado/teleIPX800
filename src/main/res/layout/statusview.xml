@@ -35,20 +35,23 @@
 				android:layout_width="wrap_content"
 				android:orientation="vertical"
 				android:id="@+id/sampleInputStatus">
-
-				<TextView
-					android:layout_height="wrap_content"
-					android:textAppearance="?android:attr/textAppearanceSmall"
-					android:layout_width="wrap_content"
-					android:text="input1"
-					android:id="@+id/input1Label"
-					android:rotationX="90.0"/>
-
-				<ImageView
-					android:layout_height="wrap_content"
-					android:layout_width="wrap_content"
-					android:src="@android:drawable/ic_delete"/>
-
+		android:src="@drawable/ic_light_on"/>
+					<TextView
+							android:layout_height="wrap_content"
+							android:textAppearance="?android:attr/textAppearanceSmall"
+							android:layout_width="wrap_content"
+							android:text="input1"
+							android:id="@+id/inputLabel"
+							android:layout_gravity="center_vertical"
+							android:layout_margin="5dp"
+							android:rotation="-90.0"/>
+					<ImageView
+							android:id="@+id/inputIc"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_vertical"
+							android:layout_width="wrap_content"
+							android:src="@drawable/ic_light_off"/>
+					
 			</LinearLayout>
 
 		</LinearLayout>
