@@ -1,6 +1,7 @@
 *.class
 *.dex
-*.ap*
+*.apk
+*.ap_
 log
 ipx800control
 
