@@ -58,7 +58,7 @@ public class IpxStatus
 
   public void refresh(MainActivity c)
   {
-		Log.d(TAG,"exe refresh!");
+		//Log.d(TAG,"exe refresh!");
 		context = c;
 		inOutData = context.getIOstate();
 		String result = "";
@@ -72,7 +72,7 @@ public class IpxStatus
 
 		if (ipx != null)
 		{
-			Log.d(TAG,"found ipx!");
+			//Log.d(TAG,"found ipx!");
 			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 			if (sp.contains("servername")) ipx.setHost(sp.getString("servername", ipx.getHost()));
 			else sp.edit().putString("servername", ipx.getHost()).apply();
@@ -123,7 +123,7 @@ public class IpxStatus
 			parser.setInput(in, null);
 			parser.nextTag();
 			readStatus(parser);
-			Log.d(TAG,"finished parsing");
+			//Log.d(TAG,"finished parsing");
 		} 
 		finally 
 		{
@@ -135,7 +135,7 @@ public class IpxStatus
 	public void fireParseFinishedEvent()
 	{
 		//set the data in the status viw
-		Log.d(TAG,"updating views");
+		//Log.d(TAG,"updating views");
 		if(context != null) context.statusUpdated();
 	}
 	
@@ -164,7 +164,7 @@ public class IpxStatus
 					if (content.equals("1")) inOutData.setOut(index,true);
 					else inOutData.setOut(index, false);
 				}
-				else Log.e(TAG, "couldn't find a number in " + name);
+				//else Log.e(TAG, "couldn't find a number in " + name);
 			}
 			else if (name.startsWith("btn"))
 			{
@@ -341,7 +341,7 @@ public class IpxStatus
   {
     if (parser.getEventType() != XmlPullParser.START_TAG)
 		{
-			Log.d(TAG,parser.getText()+" not a start tag!! bailing out");
+			//Log.d(TAG,parser.getText()+" not a start tag!! bailing out");
 			throw new IllegalStateException();
     }
     int depth = 1;

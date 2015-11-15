@@ -74,7 +74,7 @@ public class AppPreferenceFrag extends PreferenceFragment implements SharedPrefe
 	public void onSharedPreferenceChanged(SharedPreferences sharedPref, String key)
 	{
 		Preference pref = findPreference(key);
-		Log.d(TAG, "preference change for " + key + " " + pref.getTitle());
+		//Log.d(TAG, "preference change for " + key + " " + pref.getTitle());
 
 		//pref.getTitle();
 		if (pref instanceof ListPreference) 

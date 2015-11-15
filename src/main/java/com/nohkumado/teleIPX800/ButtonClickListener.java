@@ -55,11 +55,11 @@ CTOR
 		if (view instanceof Button)
 		{
 			Button button = (Button) view;
-			Log.d(TAG, "hit the button " + button.getHint()+ "id = "+button.getId());
+			//Log.d(TAG, "hit the button " + button.getHint()+ "id = "+button.getId());
 			try
 			{
 				int port2trigger = Integer.parseInt(""+button.getHint());
-				Log.d(TAG, "would trigger ipx out "+port2trigger);
+				//Log.d(TAG, "would trigger ipx out "+port2trigger);
 				try
 				{
 					ipx.set(port2trigger,true);
@@ -75,7 +75,7 @@ CTOR
 				//ok, we hit a special button....
 				if(button.getId() == R.id.servernameValue)	context.callSettings();
 				else if(button.getHint().equals("fill_me"))	context.callSettings();
-				else System.err.println("unknown button code: "+button.getHint());
+				//else Log.e(TAG,"unknown button code: "+button.getHint());
 			}
 			
 		}

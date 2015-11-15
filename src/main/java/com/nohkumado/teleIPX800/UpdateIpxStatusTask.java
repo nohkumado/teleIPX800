@@ -32,17 +32,17 @@ public class UpdateIpxStatusTask extends AsyncTask<Ipx800Control, Integer, Strin
 		String result = "";
 		if (allreadyRunning) 
 		{
-			Log.d(TAG, "doInBackground allready running.... ");
+			//Log.d(TAG, "doInBackground allready running.... ");
 			return result;
 		}
 		allreadyRunning = true;
-		Log.d(TAG, "updating in bck ground");
+		//Log.d(TAG, "updating in bck ground");
 		Ipx800Control ipx = p1[0];
 
 		if (ipx != null)
 		{
 			result = ipx.status();
-			Log.d(TAG, "ipx returned ");
+			//Log.d(TAG, "ipx returned ");
 			if (result.length() > 0)
 			{
 				ipxStatus.connected(true);
@@ -54,11 +54,11 @@ public class UpdateIpxStatusTask extends AsyncTask<Ipx800Control, Integer, Strin
 				catch (Exception e)
 				{ Log.e(TAG, "something went wrong parsing " + result + "\nException " + e);}
 			}
-			else 
-				Log.e(TAG, "no result came back...");
+			//else 
+			//	Log.e(TAG, "no result came back...");
 		}
-		else
-			Log.e(TAG, "no ipx....");
+		//else
+		//	Log.e(TAG, "no ipx....");
 		allreadyRunning = false;
 		return result;
 	}

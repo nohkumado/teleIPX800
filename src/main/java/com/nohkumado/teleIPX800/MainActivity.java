@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	public MainActivity()
   {
 		super();
-		Log.d(TAG, "**************** start ****************************");
+		//Log.d(TAG, "**************** start ****************************");
 		status = new IpxStatus(ipx); 
 		//Log.d(TAG, "filling statusdata");	
 		if (statusData.size() <= 0)
@@ -113,11 +113,11 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		//else
 		//Log.d(TAG, "small screen...");
 		Configuration config = getResources().getConfiguration();
-		if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) Log.d(TAG, "small layout...");
+	/*	if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) Log.d(TAG, "small layout...");
 		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_NORMAL) Log.d(TAG, "normal layout...");
 		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE) Log.d(TAG, "large layout...");
 		else if (config.screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE) Log.d(TAG, "xlarge layout...");
-
+*/
 		//Log.d(TAG, "stored servername = " + sp.getString("servername", "non"));	  
 		//Log.d(TAG, "ipx    servername = " + ipx.getHost());
 
@@ -199,7 +199,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   @Override
   public void onSharedPreferenceChanged(SharedPreferences p1, String p2)
   {
-		Log.d(TAG, "in main shared preference change handling");
+		//Log.d(TAG, "in main shared preference change handling");
 		status.refresh(this);
 		serverBut = (Button) findViewById(R.id.servernameValue);
 
@@ -215,7 +215,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		//status.refresh(this);
 		if (buttonArray != null)
 			buttonArray.fillData(clickHandler);
-		else Log.e(TAG, "no buttonArray....");
+		//else Log.e(TAG, "no buttonArray....");
   }
 	/**
 	 isTablet
@@ -242,7 +242,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     }
 		catch (Throwable t)
 		{
-			Log.e(TAG, "Failed to compute screen size", t);
+			//Log.e(TAG, "Failed to compute screen size", t);
 			return false;
     }
 
@@ -281,7 +281,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	}
 	public void statusUpdated()
 	{
-		Log.d(TAG, "about to invalidate click view...");
+		//Log.d(TAG, "about to invalidate click view...");
 		runOnUiThread(new Runnable() 
 			{
 				@Override

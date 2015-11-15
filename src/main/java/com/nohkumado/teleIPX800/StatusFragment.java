@@ -47,7 +47,7 @@ public class StatusFragment extends Fragment
 //		IpxStatus status = context.getStatus();
 //		Button timeBut = (Button) myView.findViewById(R.id.timeView);
 //		if(timeBut != null) timeBut.setText(status.getDate());
-		Log.d(TAG,"about to invalidate status view...");
+		//Log.d(TAG,"about to invalidate status view...");
 		
 		LedStatusListFragment statFrag = (LedStatusListFragment) getFragmentManager().findFragmentByTag("inOutFrag");
 		if( statFrag  != null) statFrag.getAdapter().notifyDataSetChanged();
