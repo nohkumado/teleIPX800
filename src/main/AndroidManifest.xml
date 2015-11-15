@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nohkumado.teleIPX800" 
 		xmlns:tools="http://schemas.android.com/tools"
-		android:versionCode='1'
-		android:versionName="first" 
+		android:versionCode='1.02'
+		android:versionName="second" 
 >
 		<uses-sdk tools:overrideLibrary="com.nohkumado.ipx800control"/>
 		<uses-permission android:name="android.permission.INTERNET" />
