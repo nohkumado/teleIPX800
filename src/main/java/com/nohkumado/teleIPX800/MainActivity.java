@@ -31,6 +31,7 @@ import android.view.ViewGroup.*;
 import android.widget.*;
 import com.nohkumado.ipx800control.*;
 import android.view.View.*;
+import android.graphics.drawable.*;
 
 
 public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -48,6 +49,9 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 
  	private double textSize;
 
+	//for small displays
+	ActionBar.Tab clickTab,statusTab;
+	
   /**
 	 CTOR
 	 creates and initializes the status obkect
@@ -74,6 +78,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   protected void onCreate(Bundle savedInstanceState)
   {
 		super.onCreate(savedInstanceState);
+		//if(savedInstanceState != null) return;
 		status.refresh(this);
 		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
 		//Log.d(TAG, "filling grid");
@@ -96,9 +101,13 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		 } 
 		 */
 		setContentView(R.layout.main);
-		if (findViewById(R.id.statusLayout) != null)
+
+		if (getResources()
+				.getIdentifier("statusLayout", "id", getPackageName())
+				!= 0) 
 		{
-			bigScreen = true;
+			LinearLayout statusContainer  = (LinearLayout) findViewById(R.id.statusLayout);
+			if (statusContainer != null) bigScreen = true;
 			//Log.d(TAG, "big screen!!");
 		}
 		//else
@@ -113,27 +122,33 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		//Log.d(TAG, "ipx    servername = " + ipx.getHost());
 
 
-		LinearLayout clickContainer = (LinearLayout) findViewById(R.id.clickodrome);
-		if (clickContainer != null)
+			if (savedInstanceState == null) clickView = new ClickoDrome();
+			if (savedInstanceState == null) statView = new StatusFragment();		
+		
+		if(bigScreen)
 		{
-			if (savedInstanceState != null) return;
-			// Add the fragment to the 'fragment_container' FrameLayout
-			//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
-			//Log.d(TAG, "creating clickodrome...");
-			clickView = new ClickoDrome();
-			//Log.d(TAG, "fetching clickcontainer...");
 			getFragmentManager().beginTransaction()
 				.add(R.id.clickodrome, clickView).commit();
-		}
-		LinearLayout statusContainer  = (LinearLayout) findViewById(R.id.statusLayout);
-		if (statusContainer != null)
-		{
-			if (savedInstanceState != null) return;
-			statView = new StatusFragment();		
-
 			getFragmentManager().beginTransaction()
 				.add(R.id.statusLayout, statView, "StatusFragment").commit();
 		}
+		else
+		{
+			ActionBar actionBar = getActionBar();
+			// Creating ActionBar tabs.
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			// Setting custom tab icons.
+			clickTab = actionBar.newTab().setIcon(android.R.drawable.ic_menu_manage);
+			statusTab = actionBar.newTab().setIcon(android.R.drawable.ic_menu_info_details);
+
+			// Setting tab listeners.
+			clickTab.setTabListener(new TabListener(clickView));
+			statusTab.setTabListener(new TabListener(statView));
+			// Adding tabs to the ActionBar.
+			actionBar.addTab(clickTab);
+			actionBar.addTab(statusTab);
+		}
+		
 		//Log.d(TAG, "done create...");
   }
 
@@ -280,7 +295,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 						if (status.isConnected()) serverBut.setTextColor(Color.GREEN);
 						else serverBut.setTextColor(Color.RED);
 					}
-					
+
 					if (clickView != null) clickView.invalidate();
 					if (statView != null) statView.update();
 				}
