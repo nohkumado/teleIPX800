@@ -23,12 +23,12 @@ public class StatusFragment extends Fragment
 		Button timeBut = (Button) myView.findViewById(R.id.timeView);
 		if(timeBut != null) timeBut.setText(status.getDate());
 		
-		LinearLayout statusView = (LinearLayout) myView.findViewById(R.id.inputStatusView);
+		LinearLayout statusView = (LinearLayout) myView.findViewById(R.id.IOstatus);
 		if(statusView != null)
 		{
 			if(getFragmentManager().findFragmentByTag("inOutFrag") == null)
 				getFragmentManager().beginTransaction()
-					.add(R.id.inputStatusView, 
+					.add(R.id.IOstatus, 
 					    new LedStatusListFragment(context.getIOstate()),"inOutFrag").commit();
 			
 			
@@ -48,6 +48,12 @@ public class StatusFragment extends Fragment
 //		Button timeBut = (Button) myView.findViewById(R.id.timeView);
 //		if(timeBut != null) timeBut.setText(status.getDate());
 		Log.d(TAG,"about to invalidate status view...");
+		
+		LedStatusListFragment statFrag = (LedStatusListFragment) getFragmentManager().findFragmentByTag("inOutFrag");
+		if( statFrag  != null) statFrag.getAdapter().notifyDataSetChanged();
+		Button timeBut = (Button) myView.findViewById(R.id.timeView);
+		if(timeBut != null && context != null) timeBut.setText(context.getStatus().getDate());
+		
 		myView.invalidate();
 	}
 

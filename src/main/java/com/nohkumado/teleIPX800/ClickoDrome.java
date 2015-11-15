@@ -23,7 +23,7 @@ public class ClickoDrome extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		context = (MainActivity) getContext();
-		Log.d(TAG, "done Clickodrome create...");
+		//Log.d(TAG, "done Clickodrome create...");
 
 	}
 
@@ -31,8 +31,8 @@ public class ClickoDrome extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.d(TAG, "entering Clickodrome createView... container: " + container);
-		Log.d(TAG, "previous state: " + savedInstanceState);
+		//Log.d(TAG, "entering Clickodrome createView... container: " + container);
+		//Log.d(TAG, "previous state: " + savedInstanceState);
 		myView = inflater.inflate(R.layout.clickodrome, container, false);
 		if (myView == null) return myView;
 		context = (MainActivity) getContext();
@@ -78,7 +78,7 @@ public class ClickoDrome extends Fragment
 		Button field = (Button) myView.findViewById(R.id.portValue);
 		if (field != null) field.setText("" + sp.getInt("serverport", ipx.getPort()));
 
-		Log.d(TAG, "done Clickodrome createView...");
+		//Log.d(TAG, "done Clickodrome createView...");
 
 		return myView;
 	}

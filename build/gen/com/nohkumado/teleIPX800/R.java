@@ -15,27 +15,30 @@ public final class R {
         public static final int ic_led_an=0x7f020001;
         public static final int ic_light_off=0x7f020002;
         public static final int ic_light_on=0x7f020003;
-        public static final int teleipx800=0x7f020004;
+        public static final int ic_relai_offen=0x7f020004;
+        public static final int ic_relai_zu=0x7f020005;
+        public static final int teleipx800=0x7f020006;
     }
     public static final class id {
+        public static final int IOstatus=0x7f080011;
         public static final int InputStatusButton=0x7f080005;
-        public static final int clickodrome=0x7f080009;
+        public static final int clickodrome=0x7f08000a;
         public static final int inputIc=0x7f080007;
         public static final int inputLabel=0x7f080006;
-        public static final int inputStatusView=0x7f08000f;
-        public static final int maincontainer=0x7f080008;
-        public static final int menu_item_about=0x7f080012;
-        public static final int menu_item_settings=0x7f080011;
-        public static final int msgField=0x7f08000a;
+        public static final int inputStatusView=0x7f080010;
+        public static final int maincontainer=0x7f080009;
+        public static final int menu_item_about=0x7f080013;
+        public static final int menu_item_settings=0x7f080012;
+        public static final int msgField=0x7f08000b;
+        public static final int ouputIc=0x7f080008;
         public static final int portValue=0x7f080003;
-        public static final int sampleInputStatus=0x7f080010;
         public static final int servernameLabel=0x7f080001;
         public static final int servernameValue=0x7f080002;
         public static final int shortcutgrid=0x7f080004;
-        public static final int statusLayout=0x7f08000b;
-        public static final int statusTitle=0x7f08000d;
-        public static final int statuscontainer=0x7f08000c;
-        public static final int timeView=0x7f08000e;
+        public static final int statusLayout=0x7f08000c;
+        public static final int statusTitle=0x7f08000e;
+        public static final int statuscontainer=0x7f08000d;
+        public static final int timeView=0x7f08000f;
         public static final int titleView=0x7f080000;
     }
     public static final class layout {

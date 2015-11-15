@@ -55,11 +55,15 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	public MainActivity()
   {
 		super();
-		status = new IpxStatus(ipx) ;	
-		for(int i = 0 ; i < 32; i++)
-		{
-			statusData.add("Relai_"+i,false,false);
-		}
+		Log.d(TAG, "**************** start ****************************");
+		status = new IpxStatus(ipx); 
+		//Log.d(TAG, "filling statusdata");	
+		if (statusData.size() <= 0)
+			for (int i = 0 ; i < 32; i++)
+			{
+				statusData.add("Relai_" + i, false, false);
+			}
+		//status.refresh(this);
   }
 
   /**
@@ -70,10 +74,16 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   protected void onCreate(Bundle savedInstanceState)
   {
 		super.onCreate(savedInstanceState);
+		status.refresh(this);
+		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
+		//Log.d(TAG, "filling grid");
+		buttonArray.fillData(clickHandler);
+
+
 		//Log.d(TAG, "calling refresh");
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		sp.registerOnSharedPreferenceChangeListener(this);
-		
+
 		ipx.setHost(sp.getString("servername", "NA"));
 
 		status.refresh(this);
@@ -103,19 +113,15 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		//Log.d(TAG, "ipx    servername = " + ipx.getHost());
 
 
-		if (buttonArray == null) buttonArray = new ButtonAdapter(this);
-		//Log.d(TAG, "filling grid");
-		buttonArray.fillData(clickHandler);
-
 		LinearLayout clickContainer = (LinearLayout) findViewById(R.id.clickodrome);
 		if (clickContainer != null)
 		{
 			if (savedInstanceState != null) return;
 			// Add the fragment to the 'fragment_container' FrameLayout
 			//Log.d(TAG,"grid? "+findViewById(R.id.shortcutgrid));
-			Log.d(TAG, "creating clickodrome...");
+			//Log.d(TAG, "creating clickodrome...");
 			clickView = new ClickoDrome();
-			Log.d(TAG, "fetching clickcontainer...");
+			//Log.d(TAG, "fetching clickcontainer...");
 			getFragmentManager().beginTransaction()
 				.add(R.id.clickodrome, clickView).commit();
 		}
@@ -126,9 +132,9 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 			statView = new StatusFragment();		
 
 			getFragmentManager().beginTransaction()
-				.add(R.id.statusLayout, statView).commit();
+				.add(R.id.statusLayout, statView, "StatusFragment").commit();
 		}
-		Log.d(TAG, "done create...");
+		//Log.d(TAG, "done create...");
   }
 
   /**
@@ -178,7 +184,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
   @Override
   public void onSharedPreferenceChanged(SharedPreferences p1, String p2)
   {
-		Log.d(TAG,"in main shared preference change handling");
+		Log.d(TAG, "in main shared preference change handling");
 		status.refresh(this);
 		serverBut = (Button) findViewById(R.id.servernameValue);
 
@@ -192,7 +198,9 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		GridView shortcuts = (GridView) findViewById(R.id.shortcutgrid);
 		if (shortcuts != null)shortcuts.invalidate();
 		//status.refresh(this);
-		buttonArray.fillData(clickHandler);
+		if (buttonArray != null)
+			buttonArray.fillData(clickHandler);
+		else Log.e(TAG, "no buttonArray....");
   }
 	/**
 	 isTablet
@@ -264,6 +272,15 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 				@Override
 				public void run() 
 				{
+					serverBut = (Button) findViewById(R.id.servernameValue);
+
+					if (serverBut != null) 
+					{
+						//Log.d(TAG, "Setting colors ... ipx connected?? " + status.isConnected());
+						if (status.isConnected()) serverBut.setTextColor(Color.GREEN);
+						else serverBut.setTextColor(Color.RED);
+					}
+					
 					if (clickView != null) clickView.invalidate();
 					if (statView != null) statView.update();
 				}
@@ -274,5 +291,5 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		return statusData;
 	}
 
-	
+
 }

@@ -43,8 +43,7 @@ public class IpxStatus
   public IpxStatus(Ipx800Control i)
   {
 		ipx = i;
-		//refresh();
-
+		//refresh(c);
   }
 	public String getDate()
 	{
@@ -63,7 +62,7 @@ public class IpxStatus
 		context = c;
 		inOutData = context.getIOstate();
 		String result = "";
-		if (progressDialog == null)
+		if (progressDialog == null && context != null)
 		{
 			progressDialog = new ProgressDialog(context);
 			progressDialog.setMessage("@strings/updateipx");
@@ -79,7 +78,7 @@ public class IpxStatus
 			else sp.edit().putString("servername", ipx.getHost()).apply();
 			if (sp.contains("serverport")) ipx.setPort(sp.getInt("serverport", ipx.getPort()));
 			else sp.edit().putInt("serverport", ipx.getPort()).apply();//else Log.d(TAG, "proceeding with createview");
-			Log.d(TAG,"set port to : "+ipx.getHost()+":"+ipx.getPort()+" starting updatetask");
+			//Log.d(TAG,"set port to : "+ipx.getHost()+":"+ipx.getPort()+" starting updatetask");
 
 			UpdateIpxStatusTask updateIt = new UpdateIpxStatusTask(progressDialog, this);
 			//Log.d(TAG, "starting thread with " + hexgrid);
@@ -130,10 +129,16 @@ public class IpxStatus
 		{
 			in.close();
 		}
+		
+  }
+	
+	public void fireParseFinishedEvent()
+	{
 		//set the data in the status viw
 		Log.d(TAG,"updating views");
 		if(context != null) context.statusUpdated();
-  }
+	}
+	
 
   private void readStatus(XmlPullParser parser) throws XmlPullParserException, IOException 
   {

@@ -67,5 +67,4 @@ public class LedStatusList
 	{
 		inputstate.set(index,p1);
 	}
-
 }
