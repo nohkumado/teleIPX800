@@ -3,8 +3,8 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.nohkumado.teleIPX800"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:versionCode="1.02"
-	android:versionName="second">
+	android:versionCode="3"
+	android:versionName="third">
 
 	<uses-sdk
 		tools:overrideLibrary="com.nohkumado.ipx800control"

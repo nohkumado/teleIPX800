@@ -10,6 +10,33 @@ import android.widget.*;
 import android.widget.GridLayout.*;
 import com.nohkumado.teleIPX800.*;
 import com.nohkumado.ipx800control.*;
+/*
+ error report:
+ java.lang.NoSuchMethodError: No virtual method 
+ getContext()Landroid/content/Context; 
+ in class Lcom/nohkumado/teleIPX800/ClickoDrome; 
+ or its super classes (declaration of 'com.nohkumado.teleIPX800.ClickoDrome' 
+ appears in /data/app/com.nohkumado.teleIPX800-2/base.apk)
+ at com.nohkumado.teleIPX800.ClickoDrome.onCreate(ClickoDrome.java:25)
+ at android.app.Fragment.performCreate(Fragment.java:2075)
+ at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:868)
+ at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1082)
+ at android.app.BackStackRecord.run(BackStackRecord.java:833)
+ at android.app.FragmentManagerImpl.execPendingActions(FragmentManager.java:1467)
+ at android.app.Activity.performStart(Activity.java:6328)
+ at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2665)
+ at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2767)
+ at android.app.ActivityThread.access$900(ActivityThread.java:177)
+ at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1449)
+ at android.os.Handler.dispatchMessage(Handler.java:102)
+ at android.os.Looper.loop(Looper.java:145)
+ at android.app.ActivityThread.main(ActivityThread.java:5951)
+ at java.lang.reflect.Method.invoke(Native Method)
+ at java.lang.reflect.Method.invoke(Method.java:372)
+ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1400)
+ at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1195)
+ #
+ */
 
 public class ClickoDrome extends Fragment
 {
@@ -35,7 +62,7 @@ public class ClickoDrome extends Fragment
 		//Log.d(TAG, "previous state: " + savedInstanceState);
 		myView = inflater.inflate(R.layout.clickodrome, container, false);
 		if (myView == null) return myView;
-		context = (MainActivity) getContext();
+		context = (MainActivity) getActivity();
 
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 		Ipx800Control ipx = context.getIpx();
